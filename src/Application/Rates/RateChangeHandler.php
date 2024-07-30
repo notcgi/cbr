@@ -1,26 +1,23 @@
 <?php
 
-namespace App\Application\Rates;
+declare(strict_types=1);
 
-use App\Application\CbrClient\ClientInterface;
-use App\Application\CbrClient\ExchangeRate;
-use DateInterval;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
-use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+namespace App\Application\Rates;
 
 class RateChangeHandler
 {
     public function __construct(
         private readonly CrossRatesHandler $crossRatesHandler
-    ) {}
+    ) {
+    }
 
     /**
      * @throws RateNotFound
      */
     public function __invoke(
-         \DateTimeImmutable $date,
-         string $currencyCode,
-         string $baseCurrencyCode,
+        \DateTimeImmutable $date,
+        string $currencyCode,
+        string $baseCurrencyCode,
     ): float {
         $currentRate = ($this->crossRatesHandler)(
             date: $date,
@@ -28,12 +25,11 @@ class RateChangeHandler
             baseCurrencyCode: $baseCurrencyCode
         );
         $previousRate = ($this->crossRatesHandler)(
-            date: $date->sub(new DateInterval('P1D')),
+            date: $date->sub(new \DateInterval('P1D')),
             currencyCode: $currencyCode,
             baseCurrencyCode: $baseCurrencyCode
         );
 
         return $currentRate / $previousRate - 1;
     }
-
 }

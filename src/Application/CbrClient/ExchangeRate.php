@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\CbrClient;
 
 use Symfony\Component\Serializer\Attribute\SerializedName;
@@ -10,6 +12,7 @@ class ExchangeRate
     public string $code;
     #[SerializedName('Value')]
     public float $value;
+
     public function __construct(
         string $code,
         string $value,

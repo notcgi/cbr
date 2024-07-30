@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\CbrClient;
+namespace App\Infrastructure\Queue;
 
 use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\PropertyInfo\Extractor\SerializerExtractor;
 use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\JsonEncode;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
@@ -18,7 +18,7 @@ use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
-class XmlSerializer extends Serializer
+class JsonSerializer extends Serializer
 {
     public function __construct()
     {
@@ -26,7 +26,7 @@ class XmlSerializer extends Serializer
             new AttributeLoader()
         );
         $metadataAwareNameConverter = new MetadataAwareNameConverter($classMetadataFactory, new CamelCaseToSnakeCaseNameConverter());
-        $encoders = [new XmlEncoder()];
+        $encoders = [new JsonEncode()];
         $extractors = new PropertyInfoExtractor(
             listExtractors: [new SerializerExtractor($classMetadataFactory), new ReflectionExtractor()],
             typeExtractors: [new PhpDocExtractor(), new ReflectionExtractor()]

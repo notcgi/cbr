@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Application\CbrClient;
+declare(strict_types=1);
 
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
+namespace App\Application\CbrClient;
 
 interface ClientInterface
 {
     /**
-     * @param \DateTimeImmutable $dateTime
      * @return ExchangeRate[]
      */
     public function getRates(\DateTimeImmutable $dateTime): array;

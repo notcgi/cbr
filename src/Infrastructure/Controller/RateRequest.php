@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Infrastructure\Controller;
+declare(strict_types=1);
 
-use Symfony\Component\HttpFoundation\Request;
+namespace App\Infrastructure\Controller;
 
 class RateRequest
 {
@@ -10,7 +10,6 @@ class RateRequest
         public string $date,
         public string $currencyCode,
         public string $baseCurrencyCode,
-    )
-    {
+    ) {
     }
 }

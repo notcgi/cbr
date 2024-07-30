@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Rates;
 
 use App\Application\CbrClient\ClientInterface;
@@ -11,15 +13,16 @@ class CrossRatesHandler
     public function __construct(
         #[Autowire(service: 'cbrClient.cached')]
         private readonly ClientInterface $client
-    ) {}
+    ) {
+    }
 
     /**
      * @throws RateNotFound
      */
     public function __invoke(
-         \DateTimeImmutable $date,
-         string $currencyCode,
-         string $baseCurrencyCode,
+        \DateTimeImmutable $date,
+        string $currencyCode,
+        string $baseCurrencyCode,
     ): float {
         $rates = $this->client->getRates($date);
 
@@ -34,14 +37,14 @@ class CrossRatesHandler
      */
     private function getRateValueByCode(array $rates, string $code): float
     {
-        if ($code === 'RUR' || $code === 'RUB') {
+        if ('RUR' === $code || 'RUB' === $code) {
             return 1;
         }
 
         /** @var ExchangeRate $rate */
-        $rate = array_values(array_filter($rates, static fn(ExchangeRate $rate) => $rate->code === $code))[0] ?? null;
+        $rate = array_values(array_filter($rates, static fn (ExchangeRate $rate) => $rate->code === $code))[0] ?? null;
 
-        if ($rate === null) {
+        if (null === $rate) {
             throw new RateNotFound($code);
         }
 

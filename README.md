@@ -1,0 +1,1 @@
+bin/console rabbitmq:setup-fabric

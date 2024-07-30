@@ -24,8 +24,12 @@ services:
     expose:
       - 6379
   rabbit:
-    image: rabbitmq:3
+    image: rabbitmq:3-management
     networks:
       - default
+    expose:
+      - 5672
+    ports:
+      - "15672:15672"
 networks:
   default:
