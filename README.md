@@ -7,7 +7,7 @@
 - Output: exchange rate value and difference from the previous trading day
 Cache data from http://cbr.ru
 - Demonstrate skills in working with message brokers and implement data collection from cbr for the previous 180 days using a worker through a console command.
-- 
+
 ## Description
 Project was realized using PHP 8.2, Symfony, Rabbit, Redis, Nginx, Docker.
 Api was documented in [api.yml](api.yml)
