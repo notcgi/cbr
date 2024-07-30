@@ -1,0 +1,56 @@
+openapi: 3.0.3
+info:
+  version: '1.0'
+  title: Test task CBR
+servers:
+  - url: http://localhost/
+    description: dev
+paths:
+  /rate:
+    get:
+      parameters:
+        - name: date
+          in: query
+          required: true
+          description: 'format: Y-m-d'
+          schema:
+            type: string
+          example: 2024-07-30
+        - name: currency_code
+          in: query
+          required: true
+          description: target currency code
+          schema:
+            type: string
+          example: JPY
+        - name: base_currency_code
+          in: query
+          required: false
+          description: base currency code
+          schema:
+            type: string
+          example: RUR
+      description: Данные для таблицы
+      responses:
+        '200':
+          description: dataset
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rateResponse'
+
+components:
+  schemas:
+    rateResponse:
+      type: object
+      properties:
+        rate:
+          description: exchange rate
+          type: number
+          format: float
+          nullable: false
+        rate_change:
+          description: difference from the previous trading day
+          type: number
+          format: float
+          nullable: false
