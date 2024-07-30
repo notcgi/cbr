@@ -24,6 +24,7 @@ class RateChangeHandler
             currencyCode: $currencyCode,
             baseCurrencyCode: $baseCurrencyCode
         );
+        // todo: here is repeated request with same date. Possible solution: add in memory cache too (per request)
         $previousRate = ($this->crossRatesHandler)(
             date: $date->sub(new \DateInterval('P1D')),
             currencyCode: $currencyCode,

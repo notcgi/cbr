@@ -6,6 +6,7 @@ namespace App\Application\Rates;
 
 use App\Application\CbrClient\ClientInterface;
 use App\Application\CbrClient\ExchangeRate;
+use App\Infrastructure\CbrClient\ClientException;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 class CrossRatesHandler
@@ -18,6 +19,7 @@ class CrossRatesHandler
 
     /**
      * @throws RateNotFound
+     * @throws ClientException
      */
     public function __invoke(
         \DateTimeImmutable $date,

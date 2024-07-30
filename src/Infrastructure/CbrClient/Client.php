@@ -36,7 +36,7 @@ class Client implements ClientInterface
 
             return $this->serializer->deserialize($content, ExchangeRateList::class, 'xml')->rates;
         } catch (\Throwable $e) {
-            throw $e; // todo
+            throw new ClientException(previous: $e);
         }
     }
 }
