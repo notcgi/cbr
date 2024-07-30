@@ -7,13 +7,14 @@ RUN pecl install redis \
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 # Update package lists and install Git
-RUN apt-get update && apt-get install -y git
+RUN apt-get update && apt-get install -y git libzip-dev
 
-RUN docker-php-ext-install sockets
+RUN docker-php-ext-install sockets zip
 
 # Clear the apt cache
 RUN apt-get clean
 
+RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 COPY ./docker/php/xdebug.ini $PHP_INI_DIR/conf.d/xdebug.ini
 
 WORKDIR /app
